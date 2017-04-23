@@ -1,3 +1,63 @@
+<<<<<<< HEAD
+import pprint
+import sys
+
+import spotipy
+import requests
+from spotipy.oauth2 import SpotifyClientCredentials
+import spotipy.util as util
+import simplejson as json
+def play():
+    r = requests.put('https://api.spotify.com/v1/me/player/play', headers={'Authorization': temp})
+def next_song():
+    r = requests.post('https://api.spotify.com/v1/me/player/next', headers={'Authorization': temp})
+    r = requests.put('https://api.spotify.com/v1/me/player/play', headers={'Authorization': temp})
+    print(r.status_code)
+def pause():
+    r = requests.put('https://api.spotify.com/v1/me/player/pause', headers={'Authorization': temp})
+def prev_song():
+    r = requests.post('https://api.spotify.com/v1/me/player/next', headers={'Authorization': temp})
+    r = requests.put('https://api.spotify.com/v1/me/player/play', headers={'Authorization': temp})
+def play_song(name):
+    sp = spotipy.Spotify()
+    search_result = sp.search(name)
+    artist_list = search_result['tracks']['items']
+    album = 'album'
+    track = artist_list[0]['uri']
+    #r = requests.get()
+    data = json.dumps(
+        {
+            'uris': [track]
+        }
+    )
+    r = requests.put('https://api.spotify.com/v1/me/player/play', data=data, headers={'Authorization': temp})
+
+if __name__ == '__main__':
+    username = "toomuchsaucehackcu"
+    authorization = {'Authorization': 'Basic 5fd9106f4c744e8a80248d2ab3d59a27:5ffe3b9afc7449c48f670c37feb37102'}
+    client_id = '5fd9106f4c744e8a80248d2ab3d59a27'
+    client_secret = '5ffe3b9afc7449c48f670c37feb37102'
+    params = {'client_id': client_id, 'response_type':'code','redirect_uri':'http://localhost:8888/callback', 'scope': 'streaming','show_dialog':True}
+
+    token = util.prompt_for_user_token(username, scope='streaming', client_id='5fd9106f4c744e8a80248d2ab3d59a27',
+                                       client_secret='5ffe3b9afc7449c48f670c37feb37102',
+                                       redirect_uri='http://localhost:8888/callback')
+
+    temp = 'Bearer ' + token
+    choice = input('What would you like to do: ')
+    while choice != 'exit':
+        if choice == 'play':
+            play()
+        elif choice == 'next':
+            next_song()
+        elif choice == 'pause':
+            pause()
+        elif 'play song' in choice:
+            song_choice = choice.replace('play', '').replace('song', '').strip()
+            #print(song_choice)
+            play_song(song_choice)
+        choice = input('What would you like to do: ')
+=======
 import pprint
 import sys
 
@@ -93,3 +153,4 @@ if __name__ == '__main__':
             change_device(choice)
 
         choice = input('What would you like to do: ')
+>>>>>>> 8eac599ec105f1088d53c0aa68f5490cc9311a84
